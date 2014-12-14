@@ -55,10 +55,10 @@ angular.module('myApp.play', ['ngRoute'])
     
     next = ->
       $scope.correct.push($scope.currentName)
+      $scope.scores[$scope.currentTeam-1]["score"] += 1
       nextName()
     
     nextPlayer = ->
-      $scope.scores[$scope.currentTeam-1]["score"] += $scope.correct.length
       $scope.unreadNames = _.shuffle($scope.unreadNames.concat($scope.currentName))
       $scope.correct = []
       $scope.currentTeam = if $scope.currentTeam < numTeams then $scope.currentTeam+1 else 1

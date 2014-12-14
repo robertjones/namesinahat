@@ -54,10 +54,10 @@
       };
       next = function() {
         $scope.correct.push($scope.currentName);
+        $scope.scores[$scope.currentTeam - 1]["score"] += 1;
         return nextName();
       };
       nextPlayer = function() {
-        $scope.scores[$scope.currentTeam - 1]["score"] += $scope.correct.length;
         $scope.unreadNames = _.shuffle($scope.unreadNames.concat($scope.currentName));
         $scope.correct = [];
         $scope.currentTeam = $scope.currentTeam < numTeams ? $scope.currentTeam + 1 : 1;

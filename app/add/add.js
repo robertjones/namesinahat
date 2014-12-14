@@ -14,9 +14,12 @@
       $scope.names = (_ref = $cookieStore.get('names')) != null ? _ref : [];
       $scope.numTeams = (_ref1 = $cookieStore.get('numTeams')) != null ? _ref1 : 2;
       $scope.addName = function() {
-        $scope.names.push($scope.name);
-        $cookieStore.put('names', $scope.names);
-        return $scope.name = '';
+        $scope.name.replace(/^\s+|\s+$/g, '');
+        if ($scope.name !== '') {
+          $scope.names.push($scope.name);
+          $cookieStore.put('names', $scope.names);
+          return $scope.name = '';
+        }
       };
       $scope.empty = function() {
         $scope.names = [];

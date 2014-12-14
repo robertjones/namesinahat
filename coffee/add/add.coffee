@@ -16,10 +16,12 @@ angular.module('myApp.add', ['ngRoute'])
   ($scope, $cookieStore, $location) ->
     $scope.names = $cookieStore.get('names') ? []
     $scope.numTeams = $cookieStore.get('numTeams') ? 2
-    $scope.addName = -> 
-      $scope.names.push($scope.name)
-      $cookieStore.put('names', $scope.names)
-      $scope.name = ''
+    $scope.addName = ->
+      $scope.name.replace(/^\s+|\s+$/g,'')
+      if $scope.name != ''
+        $scope.names.push($scope.name)
+        $cookieStore.put('names', $scope.names)
+        $scope.name = ''
     $scope.empty = ->
       $scope.names = []
       $cookieStore.remove('names')
