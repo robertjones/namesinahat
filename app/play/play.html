@@ -5,11 +5,11 @@
     <h1>{{currentName}}</h1>
   </div>
   <div class="btn-group btn-group-justified btn-group-lg" role="group" aria-label="Name controls">
-    <a class="btn btn-warning" ng-click="skip()">Skip</a>
+    <a class="btn btn-warning" ng-class="{disabled: skipsRemaining<1}" ng-click="skip()">Skip</a>
     <a class="btn btn-success" ng-click="next()">Got it, next!</a>
   </div>
   <br />
-  <p>{{correct.length}} correct and {{skipped}} skipped.</p>
+  <p>{{correct.length}} correct. {{skipsRemaining}} skips remaining.</p>
   <p>{{unreadNames.length}} names still in the hat. 
     {{roundMessages.length}} rounds to go.</p>
   <a class="btn btn-default btn-lg btn-block" ng-click="nextPlayer()">Next player</a>

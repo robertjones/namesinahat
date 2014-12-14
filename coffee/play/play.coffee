@@ -24,7 +24,8 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.unreadNames = _.shuffle(names)
     numTeams = parseInt($cookieStore.get('numTeams'))
     $scope.correct = []
-    $scope.skipped = 0
+    maxSkips = 2
+    $scope.skipsRemaining = maxSkips
     roundMessages = [
       "Round 1: No limit",
       "Round 2: One word",
@@ -49,9 +50,10 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.currentName = $scope.unreadNames.pop()
 
     skip = ->
-      $scope.skipped++
-      $scope.unreadNames.unshift($scope.currentName)
-      nextName()
+      if $scope.skipsRemaining >= 1 
+        $scope.skipsRemaining--
+        $scope.unreadNames.unshift($scope.currentName)
+        nextName()
     
     next = ->
       $scope.correct.push($scope.currentName)
@@ -62,7 +64,7 @@ angular.module('myApp.play', ['ngRoute'])
       $scope.unreadNames = _.shuffle($scope.unreadNames.concat($scope.currentName))
       $scope.correct = []
       $scope.currentTeam = if $scope.currentTeam < numTeams then $scope.currentTeam+1 else 1
-      $scope.skipped = 0
+      $scope.skipsRemaining = maxSkips
       nextName()
 
     # Add functions to scope

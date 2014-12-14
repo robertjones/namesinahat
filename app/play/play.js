@@ -10,13 +10,14 @@
     }
   ]).controller('PlayCtrl', [
     '$scope', '$cookieStore', '$location', function($scope, $cookieStore, $location) {
-      var names, next, nextName, nextPlayer, numTeams, roundMessages, skip, t, _ref;
+      var maxSkips, names, next, nextName, nextPlayer, numTeams, roundMessages, skip, t, _ref;
       $scope.gameover = false;
       names = (_ref = $cookieStore.get('names')) != null ? _ref : [];
       $scope.unreadNames = _.shuffle(names);
       numTeams = parseInt($cookieStore.get('numTeams'));
       $scope.correct = [];
-      $scope.skipped = 0;
+      maxSkips = 2;
+      $scope.skipsRemaining = maxSkips;
       roundMessages = ["Round 1: No limit", "Round 2: One word", "Round 3: No words"];
       $scope.roundMessage = roundMessages.shift();
       $scope.currentTeam = 1;
@@ -48,9 +49,11 @@
         }
       };
       skip = function() {
-        $scope.skipped++;
-        $scope.unreadNames.unshift($scope.currentName);
-        return nextName();
+        if ($scope.skipsRemaining >= 1) {
+          $scope.skipsRemaining--;
+          $scope.unreadNames.unshift($scope.currentName);
+          return nextName();
+        }
       };
       next = function() {
         $scope.correct.push($scope.currentName);
@@ -61,7 +64,7 @@
         $scope.unreadNames = _.shuffle($scope.unreadNames.concat($scope.currentName));
         $scope.correct = [];
         $scope.currentTeam = $scope.currentTeam < numTeams ? $scope.currentTeam + 1 : 1;
-        $scope.skipped = 0;
+        $scope.skipsRemaining = maxSkips;
         return nextName();
       };
       $scope.skip = skip;
