@@ -1,0 +1,28 @@
+<div ng-show="!gameover">
+  <h3 class="text-muted">Team {{currentTeam}}</h3>
+  <h3 class="text-muted">{{roundMessage}}</h3>
+  <div class="jumbotron text-center">
+    <h1>{{currentName}}</h1>
+  </div>
+  <div class="btn-group btn-group-justified btn-group-lg" role="group" aria-label="Name controls">
+    <a class="btn btn-warning" ng-click="skip()">Skip</a>
+    <a class="btn btn-success" ng-click="next()">Got it, next!</a>
+  </div>
+  <br />
+  <p>{{correct.length}} correct and {{skipped}} skipped.</p>
+  <p>{{unreadNames.length}} names still in the hat. 
+    {{roundMessages.length}} rounds to go.</p>
+  <a class="btn btn-default btn-lg btn-block" ng-click="nextPlayer()">Next player</a>
+</div>
+<h1 ng-show="gameover">Game over</h1>
+<h3 class="text-muted">Scores</h3>
+<table class="table">
+  <tr>
+    <th>Team</th>
+    <th>Score</th>
+  </tr>
+  <tr ng-repeat="p in scores">
+    <td>{{p.team}}</td>
+    <td>{{p.score}}</td>
+  </tr>
+</table>

@@ -1,0 +1,28 @@
+<div ng-show="{{go.previous > 1 && !go.final}}">
+  <h3 class="text-muted">Just now</h3>
+  <div class="alert alert-info text-center">
+    <p class="lead">Team {{previousTeam}} just got
+    <strong>{{correct.length}} correct</strong>.</p>
+  </div>
+</div>
+<div ng-show="!go.final">
+  <h3 class="text-muted">Up next</h3>
+  <div class="alert alert-success text-center">
+    <p class="lead"><strong>Team {{currentTeam}}</strong> you're up.</p>
+    <p class="lead">This is <strong>{{roundMessage}}</strong>.</p>
+  </div>
+  <a href="#/play" class="btn btn-success btn-lg btn-block">Go!</a>
+</div>
+<h3 class="text-muted">Scores</h3>
+<table class="table">
+  <tr>
+    <th>Rank</th>
+    <th>Team</th>
+    <th>Score</th>
+  </tr>
+  <tr ng-repeat="p in scores | orderBy:'score':true">
+    <td>{{$index + 1 }}</td>
+    <td>Team {{p.team}}</td>
+    <td>{{p.score}}</td>
+  </tr>
+</table>

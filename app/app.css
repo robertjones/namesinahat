@@ -1,0 +1,10 @@
+/* app css stylesheet */
+
+/* Make the masthead heading the same height as the navigation */
+.text-heading {
+  color: #CCC;
+}
+
+.container {
+  max-width: 600px;
+}

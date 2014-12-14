@@ -1,0 +1,22 @@
+<h3 class="text-muted">Names</h3>
+<form role="form" ng-submit="addName()">
+  <div class="form-group">
+    <input type="text" class="form-control input-lg" placeholder="Name to be added" ng-model="name" id="name">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Add to hat</button>
+  </div>
+</form>
+<p>{{names.length}} names in the hat. <a href="" ng-click="empty()">Empty the hat.</a></p>
+<h3 class="text-muted">Teams</h3>
+<div class="form-group">
+  <select class="form-control input-lg" id="numTeams" ng-model="numTeams">
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+  </select>
+</div>
+<hr>
+<a ng-click="play()" class="btn btn-default btn-lg btn-block btn-success">Start the game!</a>
