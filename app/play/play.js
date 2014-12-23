@@ -10,7 +10,7 @@
     }
   ]).controller('PlayCtrl', [
     '$scope', '$cookieStore', '$location', function($scope, $cookieStore, $location) {
-      var maxSkips, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, roundMessages, skip, t, _ref;
+      var maxSkips, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, skip, t, _ref;
       $scope.gameOver = false;
       names = (_ref = $cookieStore.get('names')) != null ? _ref : [];
       $scope.unreadNames = _.shuffle(names);
@@ -18,8 +18,8 @@
       $scope.correct = [];
       maxSkips = 2;
       $scope.skipsRemaining = maxSkips;
-      roundMessages = ["Round 1: No limit", "Round 2: Three words", "Round 3: One word", "Round 4: No words"];
-      $scope.roundMessage = roundMessages.shift();
+      $scope.roundMessages = ["Round 1: No limit", "Round 2: Three words", "Round 3: One word", "Round 4: No words"];
+      $scope.roundMessage = $scope.roundMessages.shift();
       $scope.currentTeam = 1;
       $scope.currentName = $scope.unreadNames.pop();
       $scope.scores = (function() {
@@ -37,12 +37,12 @@
       $scope.newRound = true;
       nextName = function() {
         var nextRound;
-        $scope.gameOver = $scope.unreadNames.length < 1 && roundMessages.length < 1;
+        $scope.gameOver = $scope.unreadNames.length < 1 && $scope.roundMessages.length < 1;
         nextRound = $scope.unreadNames.length < 1;
         if ($scope.gameOver) {
 
         } else if (nextRound) {
-          $scope.roundMessage = roundMessages.shift();
+          $scope.roundMessage = $scope.roundMessages.shift();
           $scope.unreadNames = _.shuffle(names);
           $scope.currentName = $scope.unreadNames.pop();
           return $scope.newRound = true;
