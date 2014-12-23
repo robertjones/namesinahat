@@ -10,8 +10,8 @@
     }
   ]).controller('PlayCtrl', [
     '$scope', '$cookieStore', '$location', function($scope, $cookieStore, $location) {
-      var maxSkips, names, next, nextName, nextPlayer, numTeams, roundMessages, skip, t, _ref;
-      $scope.gameover = false;
+      var maxSkips, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, roundMessages, skip, t, _ref;
+      $scope.gameOver = false;
       names = (_ref = $cookieStore.get('names')) != null ? _ref : [];
       $scope.unreadNames = _.shuffle(names);
       numTeams = parseInt($cookieStore.get('numTeams'));
@@ -33,17 +33,19 @@
         }
         return _results;
       })();
+      $scope.betweenTurns = true;
+      $scope.newRound = true;
       nextName = function() {
         var nextRound;
-        $scope.gameover = $scope.unreadNames.length < 1 && roundMessages.length < 1;
+        $scope.gameOver = $scope.unreadNames.length < 1 && roundMessages.length < 1;
         nextRound = $scope.unreadNames.length < 1;
-        if ($scope.gameover) {
+        if ($scope.gameOver) {
 
         } else if (nextRound) {
           $scope.roundMessage = roundMessages.shift();
           $scope.unreadNames = _.shuffle(names);
           $scope.currentName = $scope.unreadNames.pop();
-          return alert("Next round! " + $scope.roundMessage);
+          return $scope.newRound = true;
         } else {
           return $scope.currentName = $scope.unreadNames.pop();
         }
@@ -65,11 +67,21 @@
         $scope.correct = [];
         $scope.currentTeam = $scope.currentTeam < numTeams ? $scope.currentTeam + 1 : 1;
         $scope.skipsRemaining = maxSkips;
+        $scope.betweenTurns = true;
         return nextName();
+      };
+      nextTurn = function() {
+        $scope.betweenTurns = false;
+        return $scope.newRound = false;
+      };
+      nextRound = function() {
+        return $scope.newRound = false;
       };
       $scope.skip = skip;
       $scope.next = next;
-      return $scope.nextPlayer = nextPlayer;
+      $scope.nextPlayer = nextPlayer;
+      $scope.nextTurn = nextTurn;
+      return $scope.nextRound = nextRound;
     }
   ]);
 
