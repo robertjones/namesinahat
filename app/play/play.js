@@ -9,8 +9,8 @@
       });
     }
   ]).controller('PlayCtrl', [
-    '$scope', '$cookieStore', '$location', function($scope, $cookieStore, $location) {
-      var maxSkips, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, skip, t, _ref;
+    '$scope', '$cookieStore', '$location', '$interval', function($scope, $cookieStore, $location, $interval) {
+      var counter, maxSkips, maxTime, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, skip, t, timer, _ref;
       $scope.gameOver = false;
       names = (_ref = $cookieStore.get('names')) != null ? _ref : [];
       $scope.unreadNames = _.shuffle(names);
@@ -35,6 +35,8 @@
       })();
       $scope.betweenTurns = true;
       $scope.newRound = true;
+      maxTime = 15;
+      $scope.countDown = maxTime;
       nextName = function() {
         var nextRound;
         $scope.gameOver = $scope.unreadNames.length < 1 && $scope.roundMessages.length < 1;
@@ -71,8 +73,18 @@
         return nextName();
       };
       nextTurn = function() {
+        var $countDown, counter;
         $scope.betweenTurns = false;
-        return $scope.newRound = false;
+        $scope.newRound = false;
+        $countDown = maxTime;
+        return counter = $interval(timer, 1000);
+      };
+      timer = function() {
+        $scope.countDown -= 1;
+        if ($scope.countDown <= 0) {
+          $interval.cancel(counter);
+          return nextPlayer();
+        }
       };
       nextRound = function() {
         return $scope.newRound = false;
@@ -81,7 +93,8 @@
       $scope.next = next;
       $scope.nextPlayer = nextPlayer;
       $scope.nextTurn = nextTurn;
-      return $scope.nextRound = nextRound;
+      $scope.nextRound = nextRound;
+      return counter = void 0;
     }
   ]);
 
