@@ -28,8 +28,9 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.skipsRemaining = maxSkips
     roundMessages = [
       "Round 1: No limit",
-      "Round 2: One word",
-      "Round 3: No words"]
+      "Round 2: Three words",
+      "Round 3: One word",
+      "Round 4: No words"]
     $scope.roundMessage = roundMessages.shift()
     $scope.currentTeam = 1
     $scope.currentName = $scope.unreadNames.pop()
