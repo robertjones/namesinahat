@@ -35,7 +35,7 @@
       })();
       $scope.betweenTurns = true;
       $scope.newRound = true;
-      maxTime = 15;
+      maxTime = 60;
       $scope.countDown = maxTime;
       nextName = function() {
         var nextRound;
@@ -73,17 +73,16 @@
         return nextName();
       };
       nextTurn = function() {
-        var $countDown, counter;
         $scope.betweenTurns = false;
         $scope.newRound = false;
-        $countDown = maxTime;
-        return counter = $interval(timer, 1000);
+        return $scope.countDown = maxTime;
       };
       timer = function() {
-        $scope.countDown -= 1;
-        if ($scope.countDown <= 0) {
-          $interval.cancel(counter);
-          return nextPlayer();
+        if (!$scope.betweenTurns && !$scope.newRound) {
+          $scope.countDown -= 1;
+          if ($scope.countDown <= 0) {
+            return nextPlayer();
+          }
         }
       };
       nextRound = function() {
@@ -94,7 +93,7 @@
       $scope.nextPlayer = nextPlayer;
       $scope.nextTurn = nextTurn;
       $scope.nextRound = nextRound;
-      return counter = void 0;
+      return counter = $interval(timer, 1000);
     }
   ]);
 

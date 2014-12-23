@@ -38,7 +38,7 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.scores = ({"team": t, "score": 0} for t in [1..parseInt(numTeams)])
     $scope.betweenTurns = true
     $scope.newRound = true
-    maxTime = 15
+    maxTime = 60
     $scope.countDown = maxTime
     
 
@@ -79,14 +79,13 @@ angular.module('myApp.play', ['ngRoute'])
     nextTurn = ->
       $scope.betweenTurns = false
       $scope.newRound = false
-      $countDown = maxTime
-      counter = $interval(timer, 1000)
+      $scope.countDown = maxTime
 
     timer = ->
-      $scope.countDown -= 1
-      if $scope.countDown <= 0
-        $interval.cancel(counter)
-        nextPlayer()
+      if !$scope.betweenTurns and !$scope.newRound
+        $scope.countDown -= 1
+        if $scope.countDown <= 0
+          nextPlayer()
     
     nextRound = ->
       $scope.newRound = false
@@ -101,6 +100,6 @@ angular.module('myApp.play', ['ngRoute'])
 
     # Other
 
-    counter = undefined
+    counter = $interval(timer, 1000)
 
   ])
