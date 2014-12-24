@@ -40,6 +40,7 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.newRound = true
     maxTime = 60
     $scope.countDown = maxTime
+    $scope.firstTurn = true
     
 
     # Functions
@@ -80,6 +81,7 @@ angular.module('myApp.play', ['ngRoute'])
       $scope.betweenTurns = false
       $scope.newRound = false
       $scope.countDown = maxTime
+      $scope.firstTurn = false
 
     timer = ->
       if !$scope.betweenTurns and !$scope.newRound

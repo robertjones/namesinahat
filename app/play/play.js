@@ -37,6 +37,7 @@
       $scope.newRound = true;
       maxTime = 60;
       $scope.countDown = maxTime;
+      $scope.firstTurn = true;
       nextName = function() {
         var nextRound;
         $scope.gameOver = $scope.unreadNames.length < 1 && $scope.roundMessages.length < 1;
@@ -75,7 +76,8 @@
       nextTurn = function() {
         $scope.betweenTurns = false;
         $scope.newRound = false;
-        return $scope.countDown = maxTime;
+        $scope.countDown = maxTime;
+        return $scope.firstTurn = false;
       };
       timer = function() {
         if (!$scope.betweenTurns && !$scope.newRound) {

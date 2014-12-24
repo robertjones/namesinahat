@@ -17,6 +17,7 @@
 <div ng-show="betweenTurns && !gameOver"> <!-- Between turns section -->
   <h3 class="text-muted">Status</h3>
   <div class="alert alert-info lead text-center">
+    <p ng-show="!firstTurn">Time's up, the last turn is over.</p>
     <p><strong>Team {{currentTeam}}</strong> you're up.</p>
     <p>It's {{roundMessage}}.</p>
     <br />
