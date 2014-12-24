@@ -1,0 +1,32 @@
+Names in a hat
+
+-----
+
+The party game, Names in A Hat (aka Celebrity), on your phone
+
+Teams play against each other to guess as many names as possible before the time runs out.
+
+[Play now]
+
+-----
+
+Features
+- Digital hat - no pen and paper required
+- 60s count down with automatic pausing between rounds
+- Automatic score keeping
+
+How to play
+1. Each player secretly adds two to five names to the hat
+2. Teams take turns guessing the names their team mate is describing (without saying it or spelling it)
+3. At the end of their turn they pass the phone to the next team
+4. Once all the names have been guessed a new round begins and descriptions are limited to three words, then one word, then no words
+5. The team with the most correct guesses wins
+
+Additional rules
+- Names should be those of real people or fictional characters that most players will know of
+- Up to two skips allowed per turn
+- Each turn is 60s long
+
+-----
+
+Made by @robjones

@@ -5,10 +5,10 @@ angular.module('myApp', [
   'ngRoute'
   'ngCookies'
   'myApp.add'
-  'myApp.stage'
+  'myApp.about'
   'myApp.play'
   'myApp.version'
 ]).
 config(['$routeProvider', ($routeProvider) -> 
-  $routeProvider.otherwise({redirectTo: '/add'})
+  $routeProvider.otherwise({redirectTo: '/about'})
 ])
