@@ -23,7 +23,9 @@
       };
       $scope.empty = function() {
         $scope.names = [];
-        return $cookieStore.remove('names');
+        if (confirm("Remove all names from the hat?")) {
+          return $cookieStore.remove('names');
+        }
       };
       return $scope.play = function() {
         $cookieStore.put('numTeams', parseInt($scope.numTeams));

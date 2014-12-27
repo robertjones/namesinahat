@@ -7,7 +7,8 @@
     <button type="submit" class="btn btn-primary btn-lg btn-block">Add to hat</button>
   </div>
 </form>
-<p>{{names.length}} names in the hat. <a href="" ng-click="empty()">Empty the hat.</a></p>
+<p>{{names.length}} names in the hat.</p>
+<p><a href="" ng-click="empty()" class="text-danger">Empty the hat.</a></p>
 <h3 class="text-muted">Teams</h3>
 <div class="form-group">
   <select class="form-control input-lg" id="numTeams" ng-model="numTeams">
