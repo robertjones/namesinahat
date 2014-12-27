@@ -36,20 +36,23 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.currentTeam = 1
     $scope.currentName = $scope.unreadNames.pop()
     $scope.scores = ({"team": t, "score": 0} for t in [1..parseInt(numTeams)])
-    $scope.betweenTurns = true
+    $scope.postTurn = false
+    $scope.preTurn = true
     $scope.newRound = true
     maxTime = 60
     $scope.countDown = maxTime
-    $scope.firstTurn = true
+    $scope.numPenalties = 0
     
 
     # Functions
 
     nextName = ->
-      $scope.gameOver = $scope.unreadNames.length < 1 and 
-                        $scope.roundMessages.length < 1
       nextRound = $scope.unreadNames.length < 1
-      if $scope.gameOver
+      if $scope.unreadNames.length < 1 and $scope.roundMessages.length < 1
+        $scope.postTurn = true
+        $scope.gameOver = true
+        $scope.currentTeam = if $scope.currentTeam < numTeams then $scope.currentTeam+1 else 1
+        $interval.cancel(counter)
       else if nextRound
         $scope.roundMessage = $scope.roundMessages.shift()
         $scope.unreadNames = _.shuffle(names)
@@ -74,24 +77,32 @@ angular.module('myApp.play', ['ngRoute'])
       $scope.correct = []
       $scope.currentTeam = if $scope.currentTeam < numTeams then $scope.currentTeam+1 else 1
       $scope.skipsRemaining = maxSkips
-      $scope.betweenTurns = true
+      $scope.postTurn = true
       nextName()
 
     nextTurn = ->
-      $scope.betweenTurns = false
+      $scope.preTurn = false
       $scope.newRound = false
       $scope.countDown = maxTime
-      $scope.firstTurn = false
 
     timer = ->
-      if !$scope.betweenTurns and !$scope.newRound
+      if !$scope.preTurn and !$scope.postTurn and !$scope.newRound
         $scope.countDown -= 1
         if $scope.countDown <= 0
           nextPlayer()
     
     nextRound = ->
       $scope.newRound = false
-      
+
+    goPreTurn = ->
+      oldTeam = if $scope.currentTeam == 1 then numTeams else $scope.currentTeam-1
+      $scope.scores[oldTeam-1]["score"] -= parseInt($scope.numPenalties)
+      $scope.numPenalties = 0
+      if $scope.gameOver
+        $scope.postTurn = false
+      else
+        $scope.postTurn = false
+        $scope.preTurn = true     
 
     # Add functions to scope
     $scope.skip = skip
@@ -99,6 +110,7 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.nextPlayer = nextPlayer
     $scope.nextTurn = nextTurn
     $scope.nextRound = nextRound
+    $scope.goPreTurn = goPreTurn
 
     # Other
 

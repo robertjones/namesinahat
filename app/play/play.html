@@ -1,4 +1,4 @@
-<div ng-show="!betweenTurns && !gameOver && !newRound"> <!-- Current card and controls -->
+<div ng-show="!preTurn && !postTurn && !gameOver && !newRound"> <!-- Current card and controls -->
   <h3 class="text-muted">Team {{currentTeam}}</h3>
   <h3 class="text-muted">{{roundMessage}}</h3>
   <div class="jumbotron text-center">
@@ -14,26 +14,47 @@
   <p>{{unreadNames.length}} names still in the hat. 
     {{roundMessages.length}} rounds to go.</p>
 </div> <!-- End current card and controls -->
-<div ng-show="betweenTurns && !gameOver"> <!-- Between turns section -->
+
+<div ng-show="postTurn"> <!-- Post-turn -->
   <h3 class="text-muted">Status</h3>
-  <div class="alert alert-info lead text-center">
-    <p ng-show="!firstTurn">Time's up, the last turn is over.</p>
+  <div class="alert alert-warning lead text-center">
+    <p>Time's up, your turn is over.</p>
+    <br />
+    <div class="form-group">
+      <label>Fouls (to be deducted from score)</label>
+      <select class="form-control input" id="numPenalties" ng-model="numPenalties">
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+    <a class="btn btn-lg btn-block btn-warning" ng-click="goPreTurn()">Done, proceed</a>
+  </div>
+</div>
+
+<div ng-show="preTurn && !gameOver"> <!-- Pre-turn -->
+  <h3 class="text-muted">Status</h3>
+  <div class="alert alert-success lead text-center">
     <p><strong>Team {{currentTeam}}</strong> you're up.</p>
     <p>It's {{roundMessage}}.</p>
     <br />
-    <a class="btn btn-lg btn-block btn-primary" ng-click="nextTurn()">Start turn</a>
+    <a class="btn btn-lg btn-block btn-success" ng-click="nextTurn()">Start turn</a>
   </div>
-</div> <!-- End between turns section -->
-<div ng-show="newRound && !betweenTurns && !gameOver"> <!-- New round section -->
+</div>
+
+<div ng-show="newRound && !postTurn && !preTurn && !gameOver"> <!-- New round section -->
   <h3 class="text-muted">Status</h3>
-  <div class="alert alert-warning lead text-center">
+  <div class="alert alert-info lead text-center">
     <p>Your go continues with a new round</p>
     <p><strong>{{roundMessage}}</strong>.</p>
     <br />
-    <a class="btn btn-lg btn-block btn-warning" ng-click="nextRound()">Continue</a>
+    <a class="btn btn-lg btn-block btn-info" ng-click="nextRound()">Continue</a>
   </div>
 </div> <!-- End new round section -->
-<h1 ng-show="gameOver">Game over</h1>
+<h1 ng-show="gameOver && !postTurn">Game over</h1>
 <h3 class="text-muted">Scores</h3>
 <table class="table">
   <tr>

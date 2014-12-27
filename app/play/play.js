@@ -10,7 +10,7 @@
     }
   ]).controller('PlayCtrl', [
     '$scope', '$cookieStore', '$location', '$interval', function($scope, $cookieStore, $location, $interval) {
-      var counter, maxSkips, maxTime, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, skip, t, timer, _ref;
+      var counter, goPreTurn, maxSkips, maxTime, names, next, nextName, nextPlayer, nextRound, nextTurn, numTeams, skip, t, timer, _ref;
       $scope.gameOver = false;
       names = (_ref = $cookieStore.get('names')) != null ? _ref : [];
       $scope.unreadNames = _.shuffle(names);
@@ -33,17 +33,20 @@
         }
         return _results;
       })();
-      $scope.betweenTurns = true;
+      $scope.postTurn = false;
+      $scope.preTurn = true;
       $scope.newRound = true;
       maxTime = 60;
       $scope.countDown = maxTime;
-      $scope.firstTurn = true;
+      $scope.numPenalties = 0;
       nextName = function() {
         var nextRound;
-        $scope.gameOver = $scope.unreadNames.length < 1 && $scope.roundMessages.length < 1;
         nextRound = $scope.unreadNames.length < 1;
-        if ($scope.gameOver) {
-
+        if ($scope.unreadNames.length < 1 && $scope.roundMessages.length < 1) {
+          $scope.postTurn = true;
+          $scope.gameOver = true;
+          $scope.currentTeam = $scope.currentTeam < numTeams ? $scope.currentTeam + 1 : 1;
+          return $interval.cancel(counter);
         } else if (nextRound) {
           $scope.roundMessage = $scope.roundMessages.shift();
           $scope.unreadNames = _.shuffle(names);
@@ -70,17 +73,16 @@
         $scope.correct = [];
         $scope.currentTeam = $scope.currentTeam < numTeams ? $scope.currentTeam + 1 : 1;
         $scope.skipsRemaining = maxSkips;
-        $scope.betweenTurns = true;
+        $scope.postTurn = true;
         return nextName();
       };
       nextTurn = function() {
-        $scope.betweenTurns = false;
+        $scope.preTurn = false;
         $scope.newRound = false;
-        $scope.countDown = maxTime;
-        return $scope.firstTurn = false;
+        return $scope.countDown = maxTime;
       };
       timer = function() {
-        if (!$scope.betweenTurns && !$scope.newRound) {
+        if (!$scope.preTurn && !$scope.postTurn && !$scope.newRound) {
           $scope.countDown -= 1;
           if ($scope.countDown <= 0) {
             return nextPlayer();
@@ -90,11 +92,24 @@
       nextRound = function() {
         return $scope.newRound = false;
       };
+      goPreTurn = function() {
+        var oldTeam;
+        oldTeam = $scope.currentTeam === 1 ? numTeams : $scope.currentTeam - 1;
+        $scope.scores[oldTeam - 1]["score"] -= parseInt($scope.numPenalties);
+        $scope.numPenalties = 0;
+        if ($scope.gameOver) {
+          return $scope.postTurn = false;
+        } else {
+          $scope.postTurn = false;
+          return $scope.preTurn = true;
+        }
+      };
       $scope.skip = skip;
       $scope.next = next;
       $scope.nextPlayer = nextPlayer;
       $scope.nextTurn = nextTurn;
       $scope.nextRound = nextRound;
+      $scope.goPreTurn = goPreTurn;
       return counter = $interval(timer, 1000);
     }
   ]);
