@@ -23,8 +23,8 @@ angular.module('myApp.add', ['ngRoute'])
         $cookieStore.put('names', $scope.names)
         $scope.name = ''
     $scope.empty = ->
-      $scope.names = []
       if confirm("Remove all names from the hat?")
+        $scope.names = []
         $cookieStore.remove('names')
     $scope.play = ->
       $cookieStore.put('numTeams', parseInt($scope.numTeams))

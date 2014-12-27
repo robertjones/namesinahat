@@ -22,8 +22,8 @@
         }
       };
       $scope.empty = function() {
-        $scope.names = [];
         if (confirm("Remove all names from the hat?")) {
+          $scope.names = [];
           return $cookieStore.remove('names');
         }
       };
