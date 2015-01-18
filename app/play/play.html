@@ -9,16 +9,19 @@
     <a class="btn btn-success" ng-click="next()">Got it, next!</a>
   </div>
   <br />
+  <div class="progress">
+    <div class="progress-bar pull-right" ng-class="{ 'progress-bar-warning' : countDown<=10, 'progress-bar-danger' : countDown<=5 }" role="progressbar" style="width: {{countDown/60*100}}%;">
+    </div>
+  </div>
   <p>{{countDown}} seconds remaining.</p>
-  <p>{{correct.length}} correct. {{skipsRemaining}} skips remaining.</p>
-  <p>{{unreadNames.length}} names still in the hat. 
-    {{roundMessages.length}} rounds to go.</p>
+  <p>{{correct.length}} correct. {{skipsRemaining}} skips remaining. <a href="" ng-click="nextPlayer()">End turn.</a></p>
 </div> <!-- End current card and controls -->
 
 <div ng-show="postTurn"> <!-- Post-turn -->
   <h3 class="text-muted">Status</h3>
   <div class="alert alert-warning lead text-center">
-    <p>Time's up, your turn is over.</p>
+    <p ng-show="gameOver">There are no names left - game over.</p>
+    <p ng-show="!gameOver">Time's up. Your turn is over.</p>
     <br />
     <div class="form-group">
       <label>Fouls (to be deducted from score)</label>
@@ -38,7 +41,7 @@
 <div ng-show="preTurn && !gameOver"> <!-- Pre-turn -->
   <h3 class="text-muted">Status</h3>
   <div class="alert alert-success lead text-center">
-    <p><strong>Team {{currentTeam}}</strong> you're up.</p>
+    <p><strong>Team {{currentTeam}}</strong> it's your turn.</p>
     <p>It's {{roundMessage}}.</p>
     <br />
     <a class="btn btn-lg btn-block btn-success" ng-click="nextTurn()">Start turn</a>
@@ -55,6 +58,8 @@
   </div>
 </div> <!-- End new round section -->
 <h1 ng-show="gameOver && !postTurn">Game over</h1>
+<p>{{unreadNames.length + 1}} name(s) remaining.
+{{roundMessages.length}} round(s) left after this one.</p>
 <h3 class="text-muted">Scores</h3>
 <table class="table">
   <tr>
