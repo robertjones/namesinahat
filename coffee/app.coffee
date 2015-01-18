@@ -8,6 +8,8 @@ angular.module('myApp', [
   'myApp.about'
   'myApp.play'
   'myApp.version'
+  'angulartics'
+  'angulartics.google.analytics'
 ]).
 config(['$routeProvider', ($routeProvider) -> 
   $routeProvider.otherwise({redirectTo: '/about'})
