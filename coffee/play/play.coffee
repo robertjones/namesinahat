@@ -62,9 +62,9 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.currentName = $scope.unreadNames.pop()
 
     skip = ->
-      if $scope.skipsRemaining >= 1 
+      if $scope.skipsRemaining >= 1
         $scope.skipsRemaining--
-        $scope.unreadNames.unshift($scope.currentName)
+        $scope.unreadNames.unshift($scope.currentName) unless $scope.unreadNames.length == 0
         nextName()
     
     next = ->

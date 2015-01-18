@@ -59,7 +59,9 @@
       skip = function() {
         if ($scope.skipsRemaining >= 1) {
           $scope.skipsRemaining--;
-          $scope.unreadNames.unshift($scope.currentName);
+          if ($scope.unreadNames.length !== 0) {
+            $scope.unreadNames.unshift($scope.currentName);
+          }
           return nextName();
         }
       };
